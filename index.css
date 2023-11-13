@@ -1,6 +1,6 @@
 body {
     font-family: 'Oswald';
-    font-size: 12px;
+    font-size: 14px;
     margin: 0;
     padding: 0;
     font-weight: 500;
@@ -36,7 +36,8 @@ p {
 }
 
 .units {
-    font-size: 10px;
+    font-size: 12px;
+    margin-left: 5px;
 }
 
 .header {
@@ -111,7 +112,7 @@ p {
     background-color: white;
     filter: drop-shadow(0 0 7px #BBB8B8);
     max-width: 350px;
-    min-width: 250px;
+    min-width: 275px;
 
     display: flex;
     align-items: first;
@@ -145,9 +146,76 @@ p {
     margin-top: 10px;
 }
 
+.output-item-div {
+    margin-right: 15px;
+    width: 250px;
+}
+
 .input-item-label {
     display: flex;
-    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 3px;
+    font-size: 16px;
+}
+
+.output-item-label {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 3px;
+    font-size: 16px;
+}
+
+.input-item-input-div {
+    display: flex;
+    align-items: center;
+    border: 1px solid #716C6B;
+    padding: 2px 0px 2px 5px;
+    max-width: 250px;
+    margin: 5px 0px;
+}
+
+.output-item-output-div {
+    display: flex;
+    align-items: center;
+    border: 1px solid #716C6B;
+    padding: 2px 0px 2px 5px;
+    max-width: 250px;
+    margin: 5px 0px;
+    font-size: 14px;
+}
+
+.input-item-input {
+    border: none;
+    width: 100%;
+}
+
+.input-item-input:focus {
+    outline: none;
+}
+
+/* Remove arrows/spinners from numeric inputs */
+/* Chrome, Safari, Edge, Opera */
+.input-item-input::-webkit-outer-spin-button,
+.input-item-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.input-item-input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.input-item-line {
+    border-right: 1px solid #B5B1B1;
+    height: 20px;
+    margin: 0px 5px;
+}
+
+.output-item-line {
+    border-right: 1px solid #B5B1B1;
+    height: 20px;
+    margin: 0px 5px;
 }
 
 .input-submit {
@@ -158,6 +226,7 @@ p {
     border: none;
     font-size: 14px;
     transition: background-color 0.1s;
+    margin-top: 20px;
 }
 
 .input-submit:hover {
@@ -167,6 +236,7 @@ p {
 .input-error {
     color: red;
     font-size: 12px;
+    margin-top: 5px;
 }
 
 .output-container {
@@ -184,7 +254,24 @@ p {
     font-size: 20px;
 }
 
+.output-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    justify-content: flex-start;
+}
+
+@media screen and (max-width: 950px) {
+    .output-row {
+        flex-direction: column;
+        margin-top: 0px;
+        align-items: flex-start;
+    }
+}
+
 .stability-check {
+    margin-top: 10px;
     font-size: 16px;
 }
 
@@ -197,6 +284,8 @@ p {
     border: 1px black solid;
     background-color: #F1F1F1;
     font-size: 12px;
+    margin-bottom: 10px;
+    margin-top: 5px;
 }
 
 .tooltip {
@@ -226,6 +315,7 @@ p {
     text-align: center;
     padding: 5px 5px;
     border-radius: 6px 6px 6px 0px;
+    font-size: 12px;
     width: 120px;
     bottom: 150%;
     left: 0px;

@@ -17,7 +17,7 @@ export const QUEUE_TO_INPUT_OUTPUT_KEYS_MAP = {
     "MMsc": [["arrival-rate", "service-rate", "servers", "capacity"], ["utilization", "prob-empty-sys", "mean-num-in-sys", "mean-num-in-queue", "mean-time-in-sys", "mean-time-in-queue", "prob-cust-waits", "prob-cust-waits-more-than-t", "effective-arrival-rate"]],
     "MMsNN": [["arrival-rate", "service-rate", "servers", "calling-population"], ["utilization", "prob-empty-sys", "mean-num-in-sys", "mean-num-in-queue", "mean-time-in-sys", "mean-time-in-queue", "effective-arrival-rate"]],
     "GG1b": [["mean-interarrival", "standard-deviation-interarrival", "mean-processing", "standard-deviation-processing", "breakdown", "fix", "standard-deviation-fix", "capacity"], ["throughput", "prob-full-sys"]],
-    "GGc": [["mean-interarrival", "standard-deviation-interarrival", "mean-processing", "standard-deviation-processing", "breakdown", "fix", "standard-deviation-fix", "servers"], ["utilization", "prob-empty-sys", "mean-num-in-sys", "mean-num-in-queue", "mean-time-in-sys", "mean-time-in-queue", "mean-interdeparture", "standard-deviation-interdeparture"]]
+    "GGc": [["mean-interarrival", "standard-deviation-interarrival", "mean-processing", "standard-deviation-processing", "breakdown", "fix", "standard-deviation-fix", "servers"], ["utilization", "mean-num-in-sys", "mean-num-in-queue", "mean-time-in-sys", "mean-time-in-queue", "mean-interdeparture", "standard-deviation-interdeparture"]]
 }
 
 export const INPUT_TO_RENDING_DATA_MAP = {
@@ -86,7 +86,7 @@ export const INPUT_TO_RENDING_DATA_MAP = {
 		"description": "The number of servers."
 	},
     "capacity": {
-		"name": "System Capacity, Including Customers in Service",
+		"name": "System Capacity",
 		"symbol": "c",
 		"description": "The system capacity, including customers in service."
 	},
@@ -153,12 +153,12 @@ export const OUTPUT_TO_RENDING_DATA_MAP = {
         "description": "The arrival rate once customers who leave due to a full system are taken into account."
     },
     "prob-cust-waits": {
-        "name": "Probability Customer Waits Before Service",
+        "name": "Probability Customer Waits",
         "symbol": "P(W_q>0)",
         "description": "The probability a customer has to wait in line before service."
     },
     "prob-cust-waits-more-than-t": {
-        "name": "Probability Customer Waits More than T Before Service",
+        "name": "Probability Customer Waits More than T",
         "symbol": "P(W_q>T)",
         "description": "The probability a customer has to wait in line for more than T units of time before service."
     },

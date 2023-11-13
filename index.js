@@ -47,10 +47,30 @@ function calculate() {
     // calculate outputs
     const outputs = CALCULATIONS[queueType](inputs)
 
-    // render outputs
-    for (const key of outputKeys) {
-        const output = document.getElementById(key)
-        output.innerHTML = outputs[key]
+    // stability
+    const stability = outputs["stability"]
+    const stabilityText = document.getElementById("stability-check-text")
+    const stabilityCheckSignal = document.getElementById("stability-check-signal")
+    if (stability) {
+        stabilityText.innerHTML = "System is Stable"
+        stabilityCheckSignal.style.backgroundColor = "#4DFF49"
+    } else {
+        stabilityText.innerHTML = "System is Unstable"
+        stabilityCheckSignal.style.backgroundColor = "#FA5D41"
+    }
+
+    if (stability === false) {
+        // if unstable, clear outputs
+        for (const key of outputKeys) {
+            const output = document.getElementById(key)
+            output.innerHTML = ""
+        }
+    } else {
+        // render outputs
+        for (const key of outputKeys) {
+            const output = document.getElementById(key)
+            output.innerHTML = outputs[key].toFixed(3)
+        }
     }
 }
 
@@ -115,17 +135,23 @@ function renderInputs(inputKeys) {
         inputItemDiv.appendChild(inputItemLabel)
 
         // input and symbol
+        const inputItemInputDiv = document.createElement("div")
+        inputItemInputDiv.className = "input-item-input-div"
         const inputItemInput = document.createElement("input")
         inputItemInput.className = "input-item-input"
         inputItemInput.placeholder = `Enter ${name.toLowerCase()}...`
         inputItemInput.type = "number"
         inputItemInput.id = key
+        const inputItemLine = document.createElement("div")
+        inputItemLine.className = "input-item-line"
         const inputItemSymbol = document.createElement("p")
         katex.render(symbol, inputItemSymbol, {
             throwOnError: false
         });
-        inputItemDiv.appendChild(inputItemSymbol)
-        inputItemDiv.appendChild(inputItemInput)
+        inputItemInputDiv.appendChild(inputItemSymbol)
+        inputItemInputDiv.appendChild(inputItemLine)
+        inputItemInputDiv.appendChild(inputItemInput)
+        inputItemDiv.appendChild(inputItemInputDiv)
 
         inputDiv.appendChild(inputItemDiv)
     }
@@ -137,8 +163,13 @@ function renderOutputs(outputKeys) {
 
     // clear inputDiv
     outputDiv.innerHTML = ""
+    let outputRow = document.createElement("div")
+    outputRow.className = "output-row"
 
     for (const key of outputKeys) {
+        // skip stability
+        if (key === "stability") { continue }
+
         // units is false if not specified
         const {name, symbol, description, units = false} = OUTPUT_TO_RENDING_DATA_MAP[key]
 
@@ -158,18 +189,30 @@ function renderOutputs(outputKeys) {
         outputItemDiv.appendChild(outputItemLabel)
 
         // input and symbol
+        const outputItemOutputDiv = document.createElement("div")
+        outputItemOutputDiv.className = "output-item-output-div"
         const outputItemValue = document.createElement("div")
         outputItemValue.className = "output-item-value"
         outputItemValue.id = key
+        const outputItemLine = document.createElement("div")
+        outputItemLine.className = "output-item-line"
         const outputItemSymbol = document.createElement("p")
         katex.render(symbol, outputItemSymbol, {
             throwOnError: false
         });
-        outputItemDiv.appendChild(outputItemSymbol)
-        outputItemDiv.appendChild(outputItemValue)
+        outputItemOutputDiv.appendChild(outputItemSymbol)
+        outputItemOutputDiv.appendChild(outputItemLine)
+        outputItemOutputDiv.appendChild(outputItemValue)
+        outputItemDiv.appendChild(outputItemOutputDiv)
+        outputRow.appendChild(outputItemDiv)
 
-        outputDiv.appendChild(outputItemDiv)
-    }   
+        // put two items per row
+        if (outputRow.childElementCount === 2) {
+            outputDiv.appendChild(outputRow)
+            outputRow = document.createElement("div")
+            outputRow.className = "output-row"
+        }
+    }
 }
 
 function changeInputOutput() {
