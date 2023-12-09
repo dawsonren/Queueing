@@ -45,6 +45,10 @@ function calculate() {
     }
 
     // calculate outputs
+    // turn input values into numbers
+    for (const key of inputKeys) {
+        inputs[key] = Number(inputs[key])
+    }
     const outputs = CALCULATIONS[queueType](inputs)
 
     // stability
@@ -129,7 +133,9 @@ function renderInputs(inputKeys) {
         if (units) {
             const inputItemUnits = document.createElement("p")
             inputItemUnits.className = "units"
+            inputItemUnits.classList.add("input-item-units")
             inputItemUnits.innerHTML = returnUnitText(units, timeUnit)
+            inputItemUnits.id = `${key}_units`
             inputItemLabel.appendChild(inputItemUnits)
         }
         inputItemDiv.appendChild(inputItemLabel)
@@ -183,7 +189,9 @@ function renderOutputs(outputKeys) {
         if (units) {
             const outputItemUnits = document.createElement("p")
             outputItemUnits.className = "units"
+            outputItemUnits.classList.add("output-item-units")
             outputItemUnits.innerHTML = returnUnitText(units, timeUnit)
+            outputItemUnits.id = `${key}_units`
             outputItemLabel.appendChild(outputItemUnits)
         }
         outputItemDiv.appendChild(outputItemLabel)
@@ -221,6 +229,34 @@ function changeInputOutput() {
 
     renderInputs(inputKeys)
     renderOutputs(outputKeys)
+
+    // reset error text
+    const errorDiv = document.getElementById("input-error")
+    errorDiv.innerHTML = ""
+
+    // reset stability check
+    const stabilityText = document.getElementById("stability-check-text")
+    const stabilityCheckSignal = document.getElementById("stability-check-signal")
+    stabilityText.innerHTML = "System Stability Unknown"
+    stabilityCheckSignal.style.backgroundColor = "#F1F1F1"
+}
+
+function changeTimeUnit() {
+    const timeUnit = getTimeUnit()
+
+    document.querySelectorAll(".input-item-units").forEach((element) => {
+        const key = element.id.split("_")[0]
+        const {units} = INPUT_TO_RENDING_DATA_MAP[key]
+
+        element.innerHTML = returnUnitText(units, timeUnit)
+    })
+
+    document.querySelectorAll(".output-item-units").forEach((element) => {
+        const key = element.id.split("_")[0]
+        const {units} = OUTPUT_TO_RENDING_DATA_MAP[key]
+
+        element.innerHTML = returnUnitText(units, timeUnit)
+    })
 }
 
 // on load, render inputs and outputs
@@ -234,7 +270,7 @@ queueTypeSelect.addEventListener("change", changeInputOutput)
 
 // on time-unit change, change inputs and outputs
 const timeUnitSelect = document.getElementById("time-unit")
-timeUnitSelect.addEventListener("change", changeInputOutput)
+timeUnitSelect.addEventListener("change", changeTimeUnit)
 
 // on submit, calculate
 const submitButton = document.getElementById("input-submit");

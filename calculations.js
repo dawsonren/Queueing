@@ -2,11 +2,17 @@
 Defines all calculations for various queues for the website.
 */
 
+import { cumulativeStdNormalProbability } from "simple-statistics";
+
 function factorial(num) {
     var rval = 1;
     for (var i = 2; i <= num; i++)
         rval = rval * i;
     return rval;
+}
+
+function standardNormalPDF(x) {
+    return Math.exp(-(x ** 2) / 2) / Math.sqrt(2 * Math.PI)
 }
 
 function MG1(inputs) {
@@ -39,7 +45,7 @@ function MGs(inputs) {
         factor *= offeredLoad / i
         invP0 += factor
     }
-    invP0 += factor * offeredLoad / (c * (1 - utilization))
+    invP0 += factor * offeredLoad / (inputs["servers"] * (1 - utilization))
     const probEmptySys = 1 / invP0
 
     const serversFactorial = factorial(inputs["servers"])
@@ -346,6 +352,108 @@ function GGc(inputs) {
     }
 }
 
+function callCenters(inputs) {
+    const R = inputs["arrival-rate"] / inputs["service-rate"]
+    const beta = (inputs["servers"] - R) / (R ** 0.5)
+    const theta = 1 / inputs["average-waiting-before-abandonment"]
+
+    const beta_sqr_mu_theta = beta * ((inputs["service-rate"] / theta) ** 0.5)
+    const h1_num = standardNormalPDF(beta_sqr_mu_theta)
+    const h1_denom = cumulativeStdNormalProbability(-beta_sqr_mu_theta)
+    const h1 = h1_num / h1_denom
+
+    const sqr_mu_theta = (inputs["service-rate"] / theta) ** 0.5
+    const h2_num = standardNormalPDF(-beta)
+    const h2_denom = cumulativeStdNormalProbability(beta)
+    const h2 = sqr_mu_theta * h2_num / h2_denom
+
+    const sqr_theta_s_mu = (theta / (inputs["service-rate"] * inputs["servers"])) ** 0.5
+    const h3_num = standardNormalPDF(beta_sqr_mu_theta + sqr_theta_s_mu)
+    const h3_denom = cumulativeStdNormalProbability(-beta_sqr_mu_theta - sqr_theta_s_mu)
+    const h3 = h3_num / h3_denom
+
+    const sqr_s_mu_theta = inputs["waiting-more-than-t"] * (inputs["service-rate"] * inputs["servers"] * theta) ** 0.5
+    const h4_num = h1_num
+    const h4_denom = 1 - cumulativeStdNormalProbability(beta_sqr_mu_theta + sqr_s_mu_theta)
+    const h4 = h4_num / h4_denom
+
+    const fdc = 1 / (1 + (h1 / h2))
+    const probCustWaitsMoreThanT = ((h1 / h4) * fdc * Math.exp(-theta * inputs["waiting-more-than-t"]))
+    const asa = (1 / theta) * (1 - (h1 / h3)) * fdc
+    const probAbandonment = asa * theta
+    const expectedBusyAgents = R - R * (1 - h1 / h3) * fdc
+    const occupancy = expectedBusyAgents / inputs["servers"]
+    const expectedBusyLines = expectedBusyAgents + inputs["arrival-rate"] * asa
+    const probAbandonmentGivenDelayed = probAbandonment / fdc
+
+    return {
+        "fraction-delayed-customers": fdc,
+        "prob-cust-waits-more-than-t": probCustWaitsMoreThanT,
+        "mean-time-in-queue": asa,
+        "prob-abandonment": probAbandonment,
+        "expected-busy-agents": expectedBusyAgents,
+        "occupancy": occupancy,
+        "expected-busy-lines": expectedBusyLines,
+        "prob-abandonment-given-delayed": probAbandonmentGivenDelayed,
+        "stability": occupancy < 1
+    }
+}
+
+function MG1Priority(inputs) {
+    const rho1 = inputs["arrival-rate-type-1"] * inputs["mean-processing-type-1"]
+    const rho2 = inputs["arrival-rate-type-2"] * inputs["mean-processing-type-2"]
+    const rho3 = inputs["arrival-rate-type-3"] * inputs["mean-processing-type-3"]
+
+    const prob1 = rho1 / (rho1 + rho2 + rho3)
+    const prob2 = rho2 / (rho1 + rho2 + rho3)
+    const prob3 = rho3 / (rho1 + rho2 + rho3)
+
+    const a0 = 0
+    const a1 = rho1
+    const a2 = rho1 + rho2
+    const a3 = rho1 + rho2 + rho3
+
+    const val1 = inputs["arrival-rate-type-1"] * (inputs["mean-processing-type-1"] ** 2 + inputs["standard-deviation-processing-type-1"] ** 2)
+    const val2 = inputs["arrival-rate-type-2"] * (inputs["mean-processing-type-2"] ** 2 + inputs["standard-deviation-processing-type-2"] ** 2)
+    const val3 = inputs["arrival-rate-type-3"] * (inputs["mean-processing-type-3"] ** 2 + inputs["standard-deviation-processing-type-3"] ** 2)
+    const sumval = val1 + val2 + val3
+
+    const avgWaitingQueue1 = sumval / (2 * (1 - a0) * (1 - a1))
+    const avgWaitingSystem1 = avgWaitingQueue1 + inputs["mean-processing-type-1"]
+    const avgNumQueue1 = inputs["arrival-rate-type-1"] * avgWaitingQueue1
+    const avgNumSystem1 = inputs["arrival-rate-type-1"] * avgWaitingSystem1
+
+    const avgWaitingQueue2 = sumval / (2 * (1 - a1) * (1 - a2))
+    const avgWaitingSystem2 = avgWaitingQueue2 + inputs["mean-processing-type-2"]
+    const avgNumQueue2 = inputs["arrival-rate-type-2"] * avgWaitingQueue2
+    const avgNumSystem2 = inputs["arrival-rate-type-2"] * avgWaitingSystem2
+
+    const avgWaitingQueue3 = inputs["arrival-rate-type-1"] === 0 ? 0 : sumval / (2 * (1 - a2) * (1 - a3))
+    const avgWaitingSystem3 = avgWaitingQueue3 + inputs["mean-processing-type-3"]
+    const avgNumQueue3 = inputs["arrival-rate-type-3"] * avgWaitingQueue3
+    const avgNumSystem3 = inputs["arrival-rate-type-3"] * avgWaitingSystem3
+
+    return {
+        "average-waiting-in-queue-type-1": avgWaitingQueue1,
+        "average-waiting-in-queue-type-2": avgWaitingQueue2,
+        "average-waiting-in-queue-type-3": avgWaitingQueue3,
+        "average-waiting-in-system-type-1": avgWaitingSystem1,
+        "average-waiting-in-system-type-2": avgWaitingSystem2,
+        "average-waiting-in-system-type-3": avgWaitingSystem3,
+        "average-number-in-queue-type-1": avgNumQueue1,
+        "average-number-in-queue-type-2": avgNumQueue2,
+        "average-number-in-queue-type-3": avgNumQueue3,
+        "average-number-in-system-type-1": avgNumSystem1,
+        "average-number-in-system-type-2": avgNumSystem2,
+        "average-number-in-system-type-3": avgNumSystem3,
+        "mean-time-in-queue": avgWaitingQueue1 * prob1 + avgWaitingQueue2 * prob2 + avgWaitingQueue3 * prob3,
+        "mean-time-in-sys": avgWaitingSystem1 * prob1 + avgWaitingSystem2 * prob2 + avgWaitingSystem3 * prob3,
+        "mean-num-in-queue": avgNumQueue1 + avgNumQueue2 + avgNumQueue3,
+        "mean-num-in-sys": avgNumSystem1 + avgNumSystem2 + avgNumSystem3,
+        "stability": a3 < 1
+    }
+}
+
 export const CALCULATIONS = {
     "MG1": MG1,
     "MGs": MGs,
@@ -353,5 +461,7 @@ export const CALCULATIONS = {
     "MMsc": MMsc,
     "MMsNN": MMsNN,
     "GG1b": GG1b,
-    "GGc": GGc
+    "GGc": GGc,
+    "callCenters": callCenters,
+    "MG1Priority": MG1Priority
 }
