@@ -63,7 +63,7 @@ function calculate() {
         stabilityCheckSignal.style.backgroundColor = "#FA5D41"
     }
 
-    if (stability === false) {
+    if (!stability) {
         // if unstable, clear outputs
         for (const key of outputKeys) {
             const output = document.getElementById(key)
@@ -170,7 +170,7 @@ function renderOutputs(outputKeys) {
     // clear inputDiv
     outputDiv.innerHTML = ""
     let outputRow = document.createElement("div")
-    outputRow.className = "output-row"
+    outputRow.className = "output-row" 
 
     for (const key of outputKeys) {
         // skip stability
@@ -219,6 +219,11 @@ function renderOutputs(outputKeys) {
             outputDiv.appendChild(outputRow)
             outputRow = document.createElement("div")
             outputRow.className = "output-row"
+        }
+
+        // if last item, put it in
+        if (key === outputKeys[outputKeys.length - 1]) {
+            outputDiv.appendChild(outputRow)
         }
     }
 }
