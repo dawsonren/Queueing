@@ -57,9 +57,11 @@ function calculate() {
     const stabilityCheckSignal = document.getElementById("stability-check-signal")
     if (stability) {
         stabilityText.innerHTML = "System is Stable"
+        stabilityText.style.color = "#000000"
         stabilityCheckSignal.style.backgroundColor = "#4DFF49"
     } else {
         stabilityText.innerHTML = "System is Unstable"
+        stabilityText.style.color = "#FFFFFF"
         stabilityCheckSignal.style.backgroundColor = "#FA5D41"
     }
 
@@ -143,10 +145,6 @@ function renderInputs(inputKeys) {
         // input and symbol
         const inputItemInputDiv = document.createElement("div")
         inputItemInputDiv.className = "input-item-input-div"
-        // set div border color
-        if (color) {
-            inputItemInputDiv.style.borderColor = color
-        }
         const inputItemInput = document.createElement("input")
         inputItemInput.className = "input-item-input"
         inputItemInput.placeholder = `Enter ${name.toLowerCase()}...`
@@ -154,11 +152,15 @@ function renderInputs(inputKeys) {
         inputItemInput.id = key
         const inputItemLine = document.createElement("div")
         inputItemLine.className = "input-item-line"
+        const inputItemSymbolContainer = document.createElement("div")
+        inputItemSymbolContainer.style.padding = "0px 4px"
+        inputItemSymbolContainer.style.backgroundColor = "#F1F1F1"
         const inputItemSymbol = document.createElement("p")
         katex.render(symbol, inputItemSymbol, {
             throwOnError: false
         });
-        inputItemInputDiv.appendChild(inputItemSymbol)
+        inputItemSymbolContainer.appendChild(inputItemSymbol)
+        inputItemInputDiv.appendChild(inputItemSymbolContainer)
         inputItemInputDiv.appendChild(inputItemLine)
         inputItemInputDiv.appendChild(inputItemInput)
         inputItemDiv.appendChild(inputItemInputDiv)
@@ -212,11 +214,15 @@ function renderOutputs(outputKeys) {
         outputItemValue.id = key
         const outputItemLine = document.createElement("div")
         outputItemLine.className = "output-item-line"
+        const outputItemSymbolContainer = document.createElement("div")
+        outputItemSymbolContainer.style.padding = "0px 4px"
+        outputItemSymbolContainer.style.backgroundColor = "#F1F1F1"
         const outputItemSymbol = document.createElement("p")
         katex.render(symbol, outputItemSymbol, {
             throwOnError: false
         });
-        outputItemOutputDiv.appendChild(outputItemSymbol)
+        outputItemSymbolContainer.appendChild(outputItemSymbol)
+        outputItemOutputDiv.appendChild(outputItemSymbolContainer)
         outputItemOutputDiv.appendChild(outputItemLine)
         outputItemOutputDiv.appendChild(outputItemValue)
         outputItemDiv.appendChild(outputItemOutputDiv)
@@ -251,6 +257,7 @@ function changeInputOutput() {
     const stabilityText = document.getElementById("stability-check-text")
     const stabilityCheckSignal = document.getElementById("stability-check-signal")
     stabilityText.innerHTML = "System Stability Unknown"
+    stabilityText.style.color = "#000000"
     stabilityCheckSignal.style.backgroundColor = "#F1F1F1"
 
     // reset description
