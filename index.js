@@ -1,7 +1,7 @@
 // import fonts so we don't have to get it from Google Fonts CDN
 import '@fontsource/oswald/200.css'
 import '@fontsource/oswald/400.css'
-import { QUEUE_TO_INPUT_OUTPUT_KEYS_MAP, INPUT_TO_RENDING_DATA_MAP, OUTPUT_TO_RENDING_DATA_MAP } from './constants';
+import { QUEUE_TO_INPUT_OUTPUT_KEYS_MAP, INPUT_TO_RENDING_DATA_MAP, OUTPUT_TO_RENDING_DATA_MAP, QUEUE_TO_DESCRIPTION_MAP } from './constants';
 import { CALCULATIONS } from './calculations';
 
 function showError(errorText = false) {
@@ -121,7 +121,7 @@ function renderInputs(inputKeys) {
 
     for (const key of inputKeys) {
         // units is false if not specified
-        const {name, symbol, description, units = false} = INPUT_TO_RENDING_DATA_MAP[key]
+        const {name, symbol, description, units = false, color = false} = INPUT_TO_RENDING_DATA_MAP[key]
 
         // name and units
         const inputItemDiv = document.createElement("div")
@@ -143,6 +143,10 @@ function renderInputs(inputKeys) {
         // input and symbol
         const inputItemInputDiv = document.createElement("div")
         inputItemInputDiv.className = "input-item-input-div"
+        // set div border color
+        if (color) {
+            inputItemInputDiv.style.borderColor = color
+        }
         const inputItemInput = document.createElement("input")
         inputItemInput.className = "input-item-input"
         inputItemInput.placeholder = `Enter ${name.toLowerCase()}...`
@@ -177,7 +181,7 @@ function renderOutputs(outputKeys) {
         if (key === "stability") { continue }
 
         // units is false if not specified
-        const {name, symbol, description, units = false} = OUTPUT_TO_RENDING_DATA_MAP[key]
+        const {name, symbol, description, units = false, color = false} = OUTPUT_TO_RENDING_DATA_MAP[key]
 
         // name and units
         const outputItemDiv = document.createElement("div")
@@ -199,6 +203,10 @@ function renderOutputs(outputKeys) {
         // input and symbol
         const outputItemOutputDiv = document.createElement("div")
         outputItemOutputDiv.className = "output-item-output-div"
+        // set div border color
+        if (color) {
+            outputItemOutputDiv.style.borderColor = color
+        }
         const outputItemValue = document.createElement("div")
         outputItemValue.className = "output-item-value"
         outputItemValue.id = key
@@ -244,6 +252,18 @@ function changeInputOutput() {
     const stabilityCheckSignal = document.getElementById("stability-check-signal")
     stabilityText.innerHTML = "System Stability Unknown"
     stabilityCheckSignal.style.backgroundColor = "#F1F1F1"
+
+    // reset description
+    const description = document.getElementById("input-description")
+    description.innerHTML = QUEUE_TO_DESCRIPTION_MAP[queueType]
+    window.renderMathInElement(description, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false},
+            {left: "\\[", right: "\\]", display: true}
+        ]
+    })
 }
 
 function changeTimeUnit() {

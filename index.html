@@ -14,11 +14,9 @@
     <script async src="index.js" type="module"></script>
     <script async src="test.js" type="module"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
-    <!-- The loading of KaTeX is deferred to speed up page rendering -->
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
-    <!-- To automatically render math in text elements, include the auto-render extension: -->
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
-        onload="renderMathInElement(document.body);"></script>
+      onload="renderMathInElement(document.body);"></script>
   </head>
   <body>
     <header class="header">
@@ -38,15 +36,15 @@
         <div class="input-header">
           <label for="queue-type">Type of Queue</label>
           <select name="queue-type" id="queue-type" class="input-dropdown">
-            <option value="MG1">M/G/1</option>
-            <option value="MG1Priority">M/G/1 Priority</option>
             <option value="MMs">M/M/s</option>
-            <option value="MGs">M/G/s</option>
             <option value="MMsc">M/M/s/c</option>
             <option value="MMsNN">M/M/s/N/N</option>
-            <option value="callCenters">Call Centers</option>
+            <option value="MG1">M/G/1</option>
+            <option value="MG1Priority">M/G/1 Priority</option>
+            <option value="MGs">M/G/s</option>
             <option value="GG1b">G/G/1/b</option>
             <option value="GGc">G/G/c</option>
+            <option value="callCenters">Call Centers</option>
           </select>
         </div>
         <div class="input-time-unit">
@@ -58,6 +56,7 @@
             <option value="day">Day</option>
           </select>
         </div>
+        <div id="input-description"></div>
         <div id="input-items"></div>
         <button class="input-submit" id="input-submit">Calculate</button>
         <div id="input-error" class="input-error"></div>

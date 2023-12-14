@@ -27,13 +27,15 @@ export const INPUT_TO_RENDING_DATA_MAP = {
 		"name": "Arrival Rate",
 		"symbol": "\\lambda",
 		"description": "The number of arrivals in a unit of time.",
-		"units": "rate"
+		"units": "rate",
+        "color": "red"
 	},
     "service-rate": {
 		"name": "Service Rate",
 		"symbol": "\\mu",
 		"description": "The number of customers able to be serviced in a unit of time by a single server.",
-		"units": "rate"
+		"units": "rate",
+        "color": "blue"
 	},
     "variance": {
 		"name": "Variance of Service Time",
@@ -44,25 +46,29 @@ export const INPUT_TO_RENDING_DATA_MAP = {
 		"name": "Mean Interarrival Time",
 		"symbol": "T_{\\lambda}",
 		"description": "The average interarrival time between customers.",
-		"units": "time"
+		"units": "time",
+        "color": "red"
 	},
     "standard-deviation-interarrival": {
 		"name": "Standard Deviation of Interarrival Time",
 		"symbol": "\\sigma_{T, \\lambda}",
 		"description": "The standard deviation of customer interarrival times.",
-		"units": "time"
+		"units": "time",
+        "color": "red"
 	},
     "mean-processing": {
 		"name": "Mean Processing Time",
 		"symbol": "T_{\\mu}",
 		"description": "The average time to service a customer.",
-		"units": "time"
+		"units": "time",
+        "color": "blue"
 	},
     "standard-deviation-processing": {
  		"name": "Standard Deviation of Processing Time",
 		"symbol": "\\sigma_{T, \\mu}",
 		"description": "The standard deviation of customer processing times.",
-		"units": "time"
+		"units": "time",
+        "color": "blue"
 	},
     "breakdown": {
 		"name": "Mean Time to Breakdown",
@@ -85,17 +91,20 @@ export const INPUT_TO_RENDING_DATA_MAP = {
     "servers": {
 		"name": "Number of Servers",
 		"symbol": "s",
-		"description": "The number of servers."
+		"description": "The number of servers.",
+        "color": "lawngreen"
 	},
     "capacity": {
 		"name": "System Capacity",
 		"symbol": "c",
-		"description": "The system capacity, including customers in service."
+		"description": "The system capacity, including customers in service.",
+        "color": "yellow"
 	},
     "calling-population": {
 		"name": "Size of Calling Population",
 		"symbol": "N",
-		"description": "Size of population of customers being served."
+		"description": "Size of population of customers being served.",
+        "color": "purple"
 	},
     "waiting-more-than-t": {
         "name": "Waiting More Than T",
@@ -113,55 +122,64 @@ export const INPUT_TO_RENDING_DATA_MAP = {
         "name": "Arrival Rate For Type 1",
         "symbol": "\\lambda_1",
         "description": "The number of arrivals in a unit of time for customers of type 1.",
-        "units": "rate"
+        "units": "rate",
+        "color": "red"
     },
     "arrival-rate-type-2": {
         "name": "Arrival Rate For Type 2",
         "symbol": "\\lambda_2",
         "description": "The number of arrivals in a unit of time for customers of type 2.",
-        "units": "rate"
+        "units": "rate",
+        "color": "red"
     },
     "arrival-rate-type-3": {
         "name": "Arrival Rate For Type 3",
         "symbol": "\\lambda_3",
         "description": "The number of arrivals in a unit of time for customers of type 3.",
-        "units": "rate"
+        "units": "rate",
+        "color": "red"
     },
     "mean-processing-type-1": {
         "name": "Mean Processing Time For Type 1",
         "symbol": "T_{\\mu_1}",
         "description": "The average time to service a customer of type 1.",
-        "units": "time"
+        "units": "time",
+        "color": "blue"
     },
     "standard-deviation-processing-type-1": {
         "name": "Std. Dev. Processing Time For Type 1",
         "symbol": "\\sigma_{T, \\mu_1}",
         "description": "The standard deviation of customer processing times for type 1.",
-        "units": "time"
+        "units": "time",
+        "color": "blue"
     },
     "mean-processing-type-2": {
         "name": "Mean Processing Time For Type 2",
         "symbol": "T_{\\mu_2}",
         "description": "The average time to service a customer of type 2.",
-        "units": "time"
+        "units": "time",
+        "color": "blue"
     },
     "standard-deviation-processing-type-2": {
         "name": "Std. Dev. Processing Time For Type 2",
         "symbol": "\\sigma_{T, \\mu_2}",
         "description": "The standard deviation of customer processing times for type 2.",
-        "units": "time"
+        "units": "time",
+        "color": "blue"
     },
     "mean-processing-type-3": {
         "name": "Mean Processing Time For Type 3",
         "symbol": "T_{\\mu_3}",
         "description": "The average time to service a customer of type 3.",
-        "units": "time"
+        "units": "time",
+        "color": "blue"
     },
     "standard-deviation-processing-type-3": {
         "name": "Std. Dev. Processing Time For Type 3",
         "symbol": "\\sigma_{T, \\mu_3}",
         "description": "The standard deviation of customer processing times for type 3.",
-        "units": "time"
+        "units": "time",
+        "color": "blue"
     }
 }
 
@@ -169,29 +187,34 @@ export const OUTPUT_TO_RENDING_DATA_MAP = {
     "utilization": {
         "name": "Utilization",
         "symbol": "\\rho",
-        "description": "The average proportion of total capacity in use."
+        "description": "The average proportion of total capacity in use.",
+        "color": "lime"
     },
     "mean-num-in-sys": {
         "name": "Mean Number in System",
         "symbol": "L",
-        "description": "The mean number of customers in the system."
+        "description": "The mean number of customers in the system.",
+        "color": "fuchsia"
     },
     "mean-time-in-sys": {
         "name": "Mean Time in System",
         "symbol": "W",
         "description": "The mean time a customer spends in a system.",
-        "units": "time"
+        "units": "time",
+        "color": "darkorange"
     },
     "mean-time-in-queue": {
         "name": "Mean Time in Queue",
         "symbol": "W_q",
         "description": "The mean time a customer spends waiting in the queue.",
-        "units": "time"
+        "units": "time",
+        "color": "darkorange"
     },
     "mean-num-in-queue": {
         "name": "Mean Number in Queue",
         "symbol": "L_q",
-        "description": "The mean number of customers in the queue."
+        "description": "The mean number of customers in the queue.",
+        "color": "fuchsia"
     },
     "prob-empty-sys": {
         "name": "Probability of an Empty System",
@@ -231,7 +254,7 @@ export const OUTPUT_TO_RENDING_DATA_MAP = {
         "units": "time"
     },
     "standard-deviation-interdeparture": {
-        "name": "Standard Deviation of Interdeparture Time",
+        "name": "Std. Dev. Interdeparture Time",
         "symbol": "\\sigma_{T, d}",
         "description": "The standard deviation of the time between customer departures",
         "units": "time"
@@ -254,7 +277,8 @@ export const OUTPUT_TO_RENDING_DATA_MAP = {
     "occupancy": {
         "name": "Occupancy",
         "symbol": "\\rho",
-        "description": "The average proportion of total agents in use."
+        "description": "The average proportion of total agents in use.",
+        "color": "lime"
     },
     "expected-busy-lines": {
         "name": "Expected Number of Busy Lines",
@@ -267,69 +291,93 @@ export const OUTPUT_TO_RENDING_DATA_MAP = {
         "description": "The probability a customer abandons the queue given they are delayed."
     },
     "average-waiting-in-queue-type-1": {
-        "name": "Average Waiting in Queue For Type 1",
+        "name": "Average Waiting in Queue, Type 1",
         "symbol": "W_{q_1}",
         "description": "The average time a customer of type 1 spends waiting in queue.",
-        "units": "time"
+        "units": "time",
+        "color": "darkorange"
     },
     "average-waiting-in-queue-type-2": {
-        "name": "Average Waiting in Queue For Type 2",
+        "name": "Average Waiting in Queue, Type 2",
         "symbol": "W_{q_2}",
         "description": "The average time a customer of type 2 spends waiting in queue.",
-        "units": "time"
+        "units": "time",
+        "color": "darkorange"
     },
     "average-waiting-in-queue-type-3": {
-        "name": "Average Waiting in Queue For Type 3",
+        "name": "Average Waiting in Queue, Type 3",
         "symbol": "W_{q_3}",
         "description": "The average time a customer of type 3 spends waiting in queue.",
-        "units": "time"
+        "units": "time",
+        "color": "darkorange"
     },
     "average-waiting-in-system-type-1": {
-        "name": "Average Waiting in System For Type 1",
+        "name": "Average Waiting in System, Type 1",
         "symbol": "W_{1}",
         "description": "The average time a customer of type 1 spends in the system.",
-        "units": "time"
+        "units": "time",
+        "color": "darkorange"
     },
     "average-waiting-in-system-type-2": {
-        "name": "Average Waiting in System For Type 2",
+        "name": "Average Waiting in System, Type 2",
         "symbol": "W_{2}",
         "description": "The average time a customer of type 2 spends in the system.",
-        "units": "time"
+        "units": "time",
+        "color": "darkorange"
     },
     "average-waiting-in-system-type-3": {
-        "name": "Average Waiting in System For Type 3",
+        "name": "Average Waiting in System, Type 3",
         "symbol": "W_{3}",
         "description": "The average time a customer of type 3 spends in the system.",
-        "units": "time"
+        "units": "time",
+        "color": "darkorange"
     },
     "average-number-in-queue-type-1": {
-        "name": "Average Number in Queue For Type 1",
+        "name": "Average Number in Queue, Type 1",
         "symbol": "L_{q_1}",
-        "description": "The average number of customers of type 1 in the queue."
+        "description": "The average number of customers of type 1 in the queue.",
+        "color": "fuchsia"
     },
     "average-number-in-queue-type-2": {
-        "name": "Average Number in Queue For Type 2",
+        "name": "Average Number in Queue, Type 2",
         "symbol": "L_{q_2}",
-        "description": "The average number of customers of type 2 in the queue."
+        "description": "The average number of customers of type 2 in the queue.",
+        "color": "fuchsia"
     },
     "average-number-in-queue-type-3": {
-        "name": "Average Number in Queue For Type 3",
+        "name": "Average Number in Queue, Type 3",
         "symbol": "L_{q_3}",
-        "description": "The average number of customers of type 3 in the queue."
+        "description": "The average number of customers of type 3 in the queue.",
+        "color": "fuchsia"
     },
     "average-number-in-system-type-1": {
-        "name": "Average Number in System For Type 1",
+        "name": "Average Number in System, Type 1",
         "symbol": "L_{1}",
-        "description": "The average number of customers of type 1 in the system."
+        "description": "The average number of customers of type 1 in the system.",
+        "color": "fuchsia"
     },
     "average-number-in-system-type-2": {
-        "name": "Average Number in System For Type 2",
+        "name": "Average Number in System, Type 2",
         "symbol": "L_{2}",
-        "description": "The average number of customers of type 2 in the system."
+        "description": "The average number of customers of type 2 in the system.",
+        "color": "fuchsia"
     },
     "average-number-in-system-type-3": {
-        "name": "Average Number in System For Type 3",
+        "name": "Average Number in System, Type 3",
         "symbol": "L_{3}",
-        "description": "The average number of customers of type 3 in the system."
+        "description": "The average number of customers of type 3 in the system.",
+        "color": "fuchsia"
     },
+}
+
+export const QUEUE_TO_DESCRIPTION_MAP = {
+    "MG1": "In the M/G/1 Queueing System,$\\\\$(M) Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.$\\\\$(G) Service times follow a General distribution with mean $\\frac{1}{\\mu}$ and variance $\\sigma^2$. $\\\\$(1) There is a single server.$\\\\$Since the rest of the parameters are unspecified, there is not a limit on the number of customers in the system, there is a very large population of potential customers who arrive randomly when they need to use the system, and customers are served on a first-come, first-served basis.",
+    "MGs": "In the M/G/s Queueing System,$\\\\$(M) Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.$\\\\$(G) Service times follow a General distribution with mean $\\frac{1}{\\mu}$ and variance $\\sigma^2$. $\\\\$(s) There are $s$ servers.$\\\\$Since the rest of the parameters are unspecified, there is not a limit on the number of customers in the system, there is a very large population of potential customers who arrive randomly when they need to use the system, and customers are served on a first-come, first-served basis.",
+    "MMs": "In the M/M/s Queueing System,$\\\\$(M) Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.$\\\\$(M) Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. $\\\\$(s) There are $s$ servers.$\\\\$Since the rest of the parameters are unspecified, there is not a limit on the number of customers in the system, there is a very large population of potential customers who arrive randomly when they need to use the system, and customers are served on a first-come, first-served basis.",
+    "MMsc": "In the M/M/s/c Queueing System,$\\\\$(M) Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.$\\\\$(M) Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. $\\\\$(s) There are $s$ servers.$\\\\$(c) There is a limit of $c$ customers in the system.$\\\\$Since the rest of the parameters are unspecified, there is a very large population of potential customers who arrive randomly when they need to use the system, and customers are served on a first-come, first-served basis.",
+    "MMsNN": "In the M/M/s/N/N Queueing System,$\\\\$(M) Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.$\\\\$(M) Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. $\\\\$(s) There are $s$ servers.$\\\\$(N) There is a limit of $N$ customers in the system.$\\\\$(N) There is a limit of $N$ customers in the population.$\\\\$Since the rest of the parameters are unspecified, customers are served on a first-come, first-served basis.",
+    "GG1b": "In the G/G/1/b Queueing System,$\\\\$(G) Customers arrive according to a General distribution with mean $T_{\\lambda}$ and variance $\\sigma_{T, \\lambda}^2$.$\\\\$(G) Service times follow a General distribution with mean $T_{\\mu}$ and variance $\\sigma_{T, \\mu}^2$. $\\\\$(1) There is a single server.$\\\\$(b) There is a limit of $b$ customers in the system.$\\\\$Since the rest of the parameters are unspecified, there is a very large population of potential customers who arrive randomly when they need to use the system, and customers are served on a first-come, first-served basis. Additionally, the server breaks down after a time $T_b$ (Exponential distribution with mean $\\frac{1}{T_b}$) and is fixed after a time $T_f$ with standard deviation $\\sigma_{T, f}$ (distributed General).",
+    "GGc": "In the G/G/c Queueing System,$\\\\$(G) Customers arrive according to a General distribution with mean $T_{\\lambda}$ and variance $\\sigma_{T, \\lambda}^2$.$\\\\$(G) Service times follow a General distribution with mean $T_{\\mu}$ and variance $\\sigma_{T,\\mu}^2$. $\\\\$(c) There are $s$ servers.$\\\\$Since the rest of the parameters are unspecified, there is not a limit on the number of customers in the system, there is a very large population of potential customers who arrive randomly when they need to use the system, and customers are served on a first-come, first-served basis.  Additionally, each server breaks down after a time $T_b$ (Exponential distribution with mean $\\frac{1}{T_b}$) and is fixed after a time $T_f$ with standard deviation $\\sigma_{T, f}$ (distributed General).",
+    "callCenters": "In the Call Center Queueing System,$\\\\$(M) Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.$\\\\$(M) Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. $\\\\$(s) There are $s$ servers.$\\\\$Since the rest of the parameters are unspecified, there is not a limit on the number of customers in the system, there is a very large population of potential customers who arrive randomly when they need to use the system, and customers are served on a first-come, first-served basis. Additionally, customers abandon the queue after waiting for a time $\\theta$ (Exponential distribution with mean $\\frac{1}{\\theta}$).",
+    "MG1Priority": "In the M/G/1 Priority Queueing System,$\\\\$(M) Customers of differing priorities arrive according to a Poisson process with rate $\\lambda_i$ per unit time (where $i$ is the priority, with 1 being the highest). This implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda_i}$ for each customer type.$\\\\$(G) Service times follow a General distribution with mean $T_{\\mu_i}$ and variance $\\sigma_{T,\\mu_i}^2$ for each type. $\\\\$(1) There is a single server.$\\\\$(Priority) After serving a customer, the server will prioritize customers of type 1, which are served first, then type 2, then type 3.$\\\\$Since the rest of the parameters are unspecified, there is not a limit on the number of customers in the system and there is a very large population of potential customers who arrive randomly when they need to use the system."
 }

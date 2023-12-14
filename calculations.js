@@ -274,7 +274,6 @@ function GG1b(inputs) {
 }
 
 function GGc(inputs) {
-    console.log(inputs)
     const customerArrivalRate = 1 / inputs["mean-interarrival"]
     const serverAvailability = inputs["breakdown"] / (inputs["breakdown"] + inputs["fix"])
     const cv2Process = inputs["standard-deviation-processing"] ** 2 / inputs["mean-processing"] ** 2
@@ -284,13 +283,9 @@ function GGc(inputs) {
     const cv2CustomerInterarrival = inputs["standard-deviation-interarrival"] ** 2 * customerArrivalRate ** 2
     const capacityUtilization = customerArrivalRate * meanEffectiveProcessingTime / inputs["servers"]
 
-    console.log(customerArrivalRate, serverAvailability, cv2Process, meanEffectiveProcessingTime, cv2Outage, cv2EffectiveProcess, cv2CustomerInterarrival, capacityUtilization)
-
     const V = (cv2EffectiveProcess + cv2CustomerInterarrival) / 2
     const U = (1 / (inputs["servers"] * (1 - capacityUtilization))) * (capacityUtilization ** ((2 * (inputs["servers"] + 1)) ** 0.5 - 1))
     const T = meanEffectiveProcessingTime
-
-    console.log(V, U, T)
 
     const meanTimeInQueue = V * U * T
     const meanNuminQueue = meanTimeInQueue * customerArrivalRate
@@ -299,20 +294,7 @@ function GGc(inputs) {
     const cv2Interdeparture = 1 + (1 - capacityUtilization ** 2) * (cv2CustomerInterarrival - 1) + (capacityUtilization ** 2 / (inputs["servers"] ** 0.5)) * (cv2EffectiveProcess - 1)
     const meanInterdeparture = 1 / customerArrivalRate
     const stdDevInterdeparture = meanInterdeparture * cv2Interdeparture ** 0.5
-
-    console.log(
-        {
-            "utilization": capacityUtilization,
-            "mean-num-in-sys": meanNumInSys,
-            "mean-num-in-queue": meanNuminQueue,
-            "mean-time-in-sys": meanTimeInSys,
-            "mean-time-in-queue": meanTimeInQueue,
-            "mean-interdeparture": meanInterdeparture,
-            "standard-deviation-interdeparture": stdDevInterdeparture,
-            "stability": capacityUtilization < 1
-        }
-    )
-
+    
     return {
         "utilization": capacityUtilization,
         "mean-num-in-sys": meanNumInSys,
