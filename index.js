@@ -1,7 +1,7 @@
 // import fonts so we don't have to get it from Google Fonts CDN
 import '@fontsource/oswald/200.css'
 import '@fontsource/oswald/400.css'
-import { QUEUE_TO_INPUT_OUTPUT_KEYS_MAP, INPUT_TO_RENDING_DATA_MAP, OUTPUT_TO_RENDING_DATA_MAP, QUEUE_TO_DESCRIPTION_MAP } from './constants';
+import { QUEUE_TO_INPUT_OUTPUT_KEYS_MAP, INPUT_TO_RENDING_DATA_MAP, OUTPUT_TO_RENDING_DATA_MAP, QUEUE_TO_DESCRIPTION_MAP, QUEUE_KEY_TO_TITLE_MAP } from './constants';
 import { CALCULATIONS } from './calculations';
 
 function showError(errorText = false) {
@@ -262,15 +262,28 @@ function changeInputOutput() {
 
     // reset description
     const description = document.getElementById("input-description")
-    description.innerHTML = QUEUE_TO_DESCRIPTION_MAP[queueType]
-    window.renderMathInElement(description, {
-        delimiters: [
-            {left: "$$", right: "$$", display: true},
-            {left: "$", right: "$", display: false},
-            {left: "\\(", right: "\\)", display: false},
-            {left: "\\[", right: "\\]", display: true}
-        ]
-    })
+    description.innerHTML = ""
+    for (const [key, value] of Object.entries(QUEUE_TO_DESCRIPTION_MAP[queueType])) {
+        const sectionText = document.createElement("p")
+
+        if (key === "title") {
+            sectionText.innerHTML = `<b>${value} Queueing System</b>`
+            sectionText.style.fontSize = "14px"
+            sectionText.style.marginBottom = "8px"
+        } else {
+            sectionText.innerHTML = `<b>${QUEUE_KEY_TO_TITLE_MAP[key]}:</b> ${value}`
+            window.renderMathInElement(sectionText, {
+                delimiters: [
+                    {left: "$$", right: "$$", display: true},
+                    {left: "$", right: "$", display: false},
+                    {left: "\\(", right: "\\)", display: false},
+                    {left: "\\[", right: "\\]", display: true}
+                ]
+            })
+        }
+
+        description.appendChild(sectionText)
+    }
 }
 
 function changeTimeUnit() {

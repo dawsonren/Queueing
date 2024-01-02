@@ -332,14 +332,95 @@ export const OUTPUT_TO_RENDING_DATA_MAP = {
     },
 }
 
+export const QUEUE_KEY_TO_TITLE_MAP = {
+    "arrival": "Arrival",
+    "service": "Service",
+    "servers": "Servers",
+    "systemCapacity": "System Capacity",
+    "customerPopulation": "Customer Population",
+    "serviceDiscipline": "Service Discipline"
+}
+
 export const QUEUE_TO_DESCRIPTION_MAP = {
-    "MG1": "In the M/G/1 Queueing System,$\\\\$Arrival: Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.$\\\\$Service: Service times follow a General distribution with mean $\\frac{1}{\\mu}$ and variance $\\sigma^2$. $\\\\$Servers: There is a single server.$\\\\$System Capacity: There is not a limit on the number of customers that can wait in the system.$\\\\$Customer Population: There is a very large population of potential customers who arrive randomly when they need to use the system.$\\\\$Service Discipline: Customers are served on a first-come, first-served basis.",
-    "MGs": "In the M/G/s Queueing System,$\\\\$Arrival: Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.$\\\\$Service: Service times follow a General distribution with mean $\\frac{1}{\\mu}$ and variance $\\sigma^2$. $\\\\$Servers: There are $s$ servers.$\\\\$System Capacity: There is not a limit on the number of customers that can wait in the system.$\\\\$Customer Population: There is a very large population of potential customers who arrive randomly when they need to use the system.$\\\\$Service Discipline: Customers are served on a first-come, first-served basis.",
-    "MMs": "In the M/M/s Queueing System,$\\\\$Arrival: Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.$\\\\$Service: Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. $\\\\$Servers: There are $s$ servers.$\\\\$System Capacity: There is not a limit on the number of customers that can wait in the system.$\\\\$Customer Population: There is a very large population of potential customers who arrive randomly when they need to use the system.$\\\\$Service Discipline: Customers are served on a first-come, first-served basis.",
-    "MMsc": "In the M/M/s/c Queueing System,$\\\\$Arrival: Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.$\\\\$Service: Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. $\\\\$Servers: There are $s$ servers.$\\\\$System Capacity: There is a maximum of $b$ customers that can be in the system.$\\\\$Customer Population: There is a very large population of potential customers who arrive randomly when they need to use the system.$\\\\$Service Discipline: Customers are served on a first-come, first-served basis.",
-    "MMsNN": "In the M/M/s/N/N Queueing System,$\\\\$Arrival: Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.$\\\\$Service: Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. $\\\\$Servers: There are $s$ servers.$\\\\$System Capacity: There is a limit of $N$ customers in the system.$\\\\$Customer Population: There is a limit of $N$ customers in the population.$\\\\$Service Discipline: Customers are served on a first-come, first-served basis.",
-    "GG1b": "In the G/G/1/b Queueing System,$\\\\$Arrival: Customers arrive according to a General distribution with mean $T_{\\lambda}$ and variance $\\sigma_{T, \\lambda}^2$.$\\\\$Service: Service times follow a General distribution with mean $T_{\\mu}$ and variance $\\sigma_{T, \\mu}^2$. $\\\\Servers: There is a single server.$\\\\$System Capacity: There is a limit of $b$ customers in the system.$\\\\$Since the rest of the parameters are unspecified, there is a very large population of potential customers who arrive randomly when they need to use the system, and customers are served on a first-come, first-served basis. Additionally, the server breaks down after a time $T_b$ (Exponential distribution with mean $\\frac{1}{T_b}$) and is fixed after a time $T_f$ with standard deviation $\\sigma_{T, f}$ (distributed General).",
-    "GGc": "In the G/G/c Queueing System,$\\\\$Arrival: Customers arrive according to a General distribution with mean $T_{\\lambda}$ and variance $\\sigma_{T, \\lambda}^2$.$\\\\$Service: Service times follow a General distribution with mean $T_{\\mu}$ and variance $\\sigma_{T,\\mu}^2$. $\\\\$Servers: There are $s$ servers.$\\\\$System Capacity: There is not a limit on the number of customers that can wait in the system.$\\\\$Customer Population: There is a very large population of potential customers who arrive randomly when they need to use the system.$\\\\$Service Discipline: Customers are served on a first-come, first-served basis.$\\\\$Additionally, each server breaks down after a time $T_b$ (Exponential distribution with mean $\\frac{1}{T_b}$) and is fixed after a time $T_f$ with standard deviation $\\sigma_{T, f}$ (distributed General).",
-    "callCenters": "In the Call Center Queueing System,$\\\\$Arrival: Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.$\\\\$Service: Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. $\\\\$Servers: There are $s$ servers.$\\\\$System Capacity: There is not a limit on the number of customers that can wait in the system.$\\\\$Customer Population: There is a very large population of potential customers who arrive randomly when they need to use the system.$\\\\$Service Discipline: Customers are served on a first-come, first-served basis.$\\\\$Additionally, customers abandon the queue after waiting for a time $\\theta$ (Exponential distribution with mean $\\frac{1}{\\theta}$).",
-    "MG1Priority": "In the M/G/1 Priority Queueing System,$\\\\$Arrival: Customers of differing priorities arrive according to a Poisson process with rate $\\lambda_i$ per unit time (where $i$ is the priority, with 1 being the highest). This implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda_i}$ for each customer type.$\\\\$Service: Service times follow a General distribution with mean $T_{\\mu_i}$ and variance $\\sigma_{T,\\mu_i}^2$ for each type. $\\\\$Servers: There is a single server.$\\\\$$System Capacity: There is not a limit on the number of customers that can wait in the system.$\\\\$Customer Population: There is a very large population of potential customers who arrive randomly when they need to use the system.$\\\\$Service Discipline: After serving a customer, the server will prioritize customers of type 1, which are served first, then type 2, then type 3."
+    "MG1": {
+        "title": "M/G/1",
+        "arrival": "Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.",
+        "service": "Service times follow a General distribution with mean $\\frac{1}{\\mu}$ and variance $\\sigma^2$.",
+        "servers": "There is a single server.",
+        "systemCapacity": "There is not a limit on the number of customers that can wait in the system.",
+        "customerPopulation": "There is a very large population of potential customers who arrive randomly when they need to use the system.",
+        "serviceDiscipline": "Customers are served on a first-come, first-served basis."
+    },
+    "MGs": {
+        "title": "M/G/s",
+        "arrival": "Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.",
+        "service": "Service times follow a General distribution with mean $\\frac{1}{\\mu}$ and variance $\\sigma^2$.",
+        "servers": "There are $s$ servers.",
+        "systemCapacity": "There is not a limit on the number of customers that can wait in the system.",
+        "customerPopulation": "There is a very large population of potential customers who arrive randomly when they need to use the system.",
+        "serviceDiscipline": "Customers are served on a first-come, first-served basis."
+    },
+    "MMs": {
+        "title": "M/M/s",
+        "arrival": "Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.",
+        "service": "Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. ",
+        "servers": "There are $s$ servers.",
+        "systemCapacity": "There is not a limit on the number of customers that can wait in the system.",
+        "customerPopulation": "There is a very large population of potential customers who arrive randomly when they need to use the system.",
+        "serviceDiscipline": "Customers are served on a first-come, first-served basis."
+    },
+    "MMsc": {
+        "title": "M/M/s/c",
+        "arrival": "Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.",
+        "service": "Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. ",
+        "servers": "There are $s$ servers.",
+        "systemCapacity": "There is a maximum of $c$ customers that can be in the system.",
+        "customerPopulation": "There is a very large population of potential customers who arrive randomly when they need to use the system.",
+        "serviceDiscipline": "Customers are served on a first-come, first-served basis."
+    },
+    "MMsNN": {
+        "title": "M/M/s/N/N",
+        "arrival": "Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.",
+        "service": "Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. ",
+        "servers": "There are $s$ servers.",
+        "systemCapacity": "There is a limit of $N$ customers in the system.",
+        "customerPopulation": "There is a limit of $N$ customers in the population.",
+        "serviceDiscipline": "Customers are served on a first-come, first-served basis."
+    },
+    "GG1b": {
+        "title": "G/G/1/b",
+        "arrival": "Customers arrive according to a General distribution with mean $T_{\\lambda}$ and variance $\\sigma_{T, \\lambda}^2$.",
+        "service": "Service times follow a General distribution with mean $T_{\\mu}$ and variance $\\sigma_{T, \\mu}^2$. ",
+        "servers": "There is a single server.",
+        "systemCapacity": "There is a limit of $b$ customers in the system.",
+        "customerPopulation": "Since the rest of the parameters are unspecified, there is a very large population of potential customers who arrive randomly when they need to use the system.",
+        "serviceDiscipline": "Customers are served on a first-come, first-served basis."
+    },
+    "GGc": {
+        "title": "G/G/c",
+        "arrival": "Customers arrive according to a General distribution with mean $T_{\\lambda}$ and variance $\\sigma_{T, \\lambda}^2$.",
+        "service": "Service times follow a General distribution with mean $T_{\\mu}$ and variance $\\sigma_{T,\\mu}^2$. ",
+        "servers": "There are $s$ servers.",
+        "systemCapacity": "There is not a limit on the number of customers that can wait in the system.",
+        "customerPopulation": "Since the rest of the parameters are unspecified, there is a very large population of potential customers who arrive randomly when they need to use the system.",
+        "serviceDiscipline": "Customers are served on a first-come, first-served basis."
+    },
+    "callCenters": {
+        "title": "Call Center",
+        "arrival": "Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.",
+        "service": "Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. ",
+        "servers": "There are $s$ servers.",
+        "systemCapacity": "There is not a limit on the number of customers that can wait in the system.",
+        "customerPopulation": "There is a very large population of potential customers who arrive randomly when they need to use the system.",
+        "serviceDiscipline": "Customers are served on a first-come, first-served basis. Additionally, customers abandon the queue after waiting for a time $\\theta$ (Exponential distribution with mean $\\frac{1}{\\theta}$)."
+    },
+    "MG1Priority": {
+        "title": "M/G/1 Priority",
+        "arrival": "Customers of differing priorities arrive according to a Poisson process with rate $\\lambda_i$ per unit time (where $i$ is the priority, with 1 being the highest). This implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda_i}$ for each customer type.",
+        "service": "Service times follow a General distribution with mean $T_{\\mu_i}$ and variance $\\sigma_{T,\\mu_i}^2$ for each type. ",
+        "servers": "There is a single server.",
+        "systemCapacity": "There is not a limit on the number of customers that can wait in the system.",
+        "customerPopulation": "There is a very large population of potential customers who arrive randomly when they need to use the system.",
+        "serviceDiscipline": "After serving a customer, the server will prioritize customers of type 1, which are served first, then type 2, then type 3."
+    }
 }
