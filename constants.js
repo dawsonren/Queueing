@@ -338,7 +338,8 @@ export const QUEUE_KEY_TO_TITLE_MAP = {
     "servers": "Servers",
     "systemCapacity": "System Capacity",
     "customerPopulation": "Customer Population",
-    "serviceDiscipline": "Service Discipline"
+    "serviceDiscipline": "Service Discipline",
+    "abandonment": "Abandonment"
 }
 
 export const QUEUE_TO_DESCRIPTION_MAP = {
@@ -406,13 +407,14 @@ export const QUEUE_TO_DESCRIPTION_MAP = {
         "serviceDiscipline": "Customers are served on a first-come, first-served basis."
     },
     "callCenters": {
-        "title": "Call Center",
+        "title": "M/M/s with Abandonment",
         "arrival": "Customers arrive according to a Poisson process with rate $\\lambda$ per unit time, which implies that the time between consecutive arrivals follows an Exponential distribution with mean $\\frac{1}{\\lambda}$.",
         "service": "Service times follow an Exponential distribution with mean $\\frac{1}{\\mu}$. ",
         "servers": "There are $s$ servers.",
         "systemCapacity": "There is not a limit on the number of customers that can wait in the system.",
         "customerPopulation": "There is a very large population of potential customers who arrive randomly when they need to use the system.",
-        "serviceDiscipline": "Customers are served on a first-come, first-served basis. Additionally, customers abandon the queue after waiting for a time $\\theta$ (Exponential distribution with mean $\\frac{1}{\\theta}$)."
+        "serviceDiscipline": "Customers are served on a first-come, first-served basis.",
+        "abandonment": "Customers abandon the queue after waiting for a time $\\theta$ (Exponential distribution with mean $\\frac{1}{\\theta}$)."
     },
     "MG1Priority": {
         "title": "M/G/1 Priority",

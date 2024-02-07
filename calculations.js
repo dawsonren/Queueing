@@ -160,11 +160,11 @@ function MMsc(inputs) {
         meanTimeInSys = meanTimeInQueue + (1 / inputs["service-rate"])
         meanNumInSys = meanTimeInSys * effectiveArrivalRate
     } else {
-        let invP0 = 0
+        let P0 = 1
         let factor = 1
-        for (let i = 0; i <= inputs["servers"]; i++) {
+        for (let i = 1; i <= inputs["servers"]; i++) {
             factor *= offeredLoad / i
-            invP0 += factor
+            P0 += factor
         }
         if (inputs["servers"] < inputs["capacity"]) {
             let utilizationSum = utilization
@@ -173,21 +173,20 @@ function MMsc(inputs) {
                     utilizationSum += utilization ** (i - inputs["servers"])
                 }
             }
-            invP0 += factor * utilizationSum
+            P0 += factor * utilizationSum
         }
-        probEmptySys = 1 / invP0
+        let invP0 = 1 / P0
+        probEmptySys = invP0
         probFullSys = probEmptySys * offeredLoad ** inputs["capacity"] / (factorial(inputs["servers"]) * inputs["servers"] ** (inputs["capacity"] - inputs["servers"]))
         effectiveArrivalRate = inputs["arrival-rate"] * (1 - probFullSys)
-        // TODO: double check I entered this correctly
-        meanNumInQueue = probEmptySys * offeredLoad ** inputs["servers"] / (factorial(inputs["servers"]) * (1 - utilization) ** 2 * (1 - utilization ** (inputs["capacity"] - inputs["servers"]) - (inputs["capacity"] - inputs["servers"] * utilization ** (inputs["capacity"] - inputs["servers"]) * (1 - utilization))))
+        meanNumInQueue = probEmptySys * offeredLoad ** inputs["servers"] / (factorial(inputs["servers"]) * (1 - utilization) ** 2 * (1 - utilization ** (inputs["capacity"] - inputs["servers"]) - (inputs["capacity"] - inputs["servers"]) * utilization ** (inputs["capacity"] - inputs["servers"]) * (1 - utilization)))
         meanTimeInQueue = meanNumInQueue / effectiveArrivalRate
         meanTimeInSys = meanTimeInQueue + (1 / inputs["service-rate"])
         meanNumInSys = meanTimeInSys * effectiveArrivalRate
     }
 
-
     return {
-        "utilization": utilization,
+        "utilization": effectiveArrivalRate / (inputs["service-rate"] * inputs["servers"]),
         "prob-empty-sys": probEmptySys,
         "prob-full-sys": probFullSys,
         "mean-num-in-sys": meanNumInSys,
@@ -195,7 +194,7 @@ function MMsc(inputs) {
         "mean-time-in-sys": meanTimeInSys,
         "mean-time-in-queue": meanTimeInQueue,
         "effective-arrival-rate": effectiveArrivalRate,
-        "stability": utilization <= 1
+        "stability": true // always stable because of limited capacity
     }
 }
 
@@ -350,7 +349,7 @@ function callCenters(inputs) {
         "occupancy": occupancy,
         "expected-busy-lines": expectedBusyLines,
         "prob-abandonment-given-delayed": probAbandonmentGivenDelayed,
-        "stability": occupancy < 1
+        "stability": isFinite(inputs["average-waiting-before-abandonment"]) || occupancy < 1
     }
 }
 
