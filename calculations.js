@@ -238,7 +238,7 @@ function MMsNN(inputs) {
         "mean-time-in-sys": meanTimeInSys,
         "mean-time-in-queue": meanTimeInQueue,
         "effective-arrival-rate": effectiveArrivalRate,
-        "stability": utilization <= 1
+        "stability": true
     }
 }
 
