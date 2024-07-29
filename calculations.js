@@ -202,6 +202,7 @@ function MMsNN(inputs) {
     const offeredLoad = inputs["arrival-rate"] / inputs["service-rate"]
     const Pi = new Array(inputs["calling-population"]).fill(0)
     let invP0 = 0
+    let probEmptySys, meanNumInSys, meanNumInQueue, meanTimeInSys, meanTimeInQueue, effectiveArrivalRate, utilization
     if (inputs["servers"] > 1) {
         for (let i = 1; i <= inputs["servers"] - 1; i++) {
             let val = factorial(inputs["calling-population"]) / (factorial(i) * factorial(inputs["calling-population"] - i)) * offeredLoad ** i
