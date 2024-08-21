@@ -102,12 +102,13 @@ function MMs(inputs) {
 function MMsc(inputs) {
     const utilization = inputs["arrival-rate"] / (inputs["service-rate"] * inputs["servers"])
     const offeredLoad = inputs["arrival-rate"] / inputs["service-rate"]
-    let probEmptySys, probFullSys, effectiveArrivalRate, meanNumInQueue, meanTimeInQueue, meanTimeInSys, meanNumInSys, probCustWaits, probCustWaitsMoreThanT
+    let probEmptySys, probFullSys, effectiveArrivalRate, meanNumInQueue, meanTimeInQueue, meanTimeInSys, meanNumInSys
 
     if (inputs["servers"] === inputs["capacity"]) {
+        // Otherwise known as the Erlang-B model, where the number of servers is equal to the capacity
         // the entire population can be in the system at the same time
         let invP0 = 1
-        for (let i = 1; i <= inputs["capacity"]; i++) {
+        for (let i = 0; i <= inputs["capacity"]; i++) {
             invP0 += offeredLoad ** i / factorial(i)
         }
         probEmptySys = 1 / invP0
@@ -160,30 +161,87 @@ function MMsc(inputs) {
         meanTimeInSys = meanTimeInQueue + (1 / inputs["service-rate"])
         meanNumInSys = meanTimeInSys * effectiveArrivalRate
     } else {
-        let P0 = 1
-        let factor = 1
-        for (let i = 1; i <= inputs["servers"]; i++) {
-            factor *= offeredLoad / i
-            P0 += factor
-        }
-        if (inputs["servers"] < inputs["capacity"]) {
-            let utilizationSum = utilization
-            if (inputs["servers"] + 1 < inputs["capacity"]) {
-                for (let i = inputs["servers"] + 2; i <= inputs["capacity"]; i++) {
-                    utilizationSum += utilization ** (i - inputs["servers"])
-                }
+        function calculatePi0() {
+            const c = inputs["servers"];
+            const lambda = inputs["arrival-rate"];
+            const mu = inputs["service-rate"];
+            const K = inputs["capacity"];
+
+            let sum = 0;
+            for (let k = 0; k <= c; k++) {
+                sum += Math.pow(lambda / mu, k) / factorial(k);
             }
-            P0 += factor * utilizationSum
+            for (let k = c+1; k <= K; k++) {
+                sum += (Math.pow(lambda / mu, c) / factorial(c)) * 
+                       Math.pow(lambda / mu, k - c) / Math.pow(c, k - c);
+            }
+            
+            return 1 / sum;
         }
-        let invP0 = 1 / P0
-        probEmptySys = invP0
+        probEmptySys = calculatePi0()
         probFullSys = probEmptySys * offeredLoad ** inputs["capacity"] / (factorial(inputs["servers"]) * inputs["servers"] ** (inputs["capacity"] - inputs["servers"]))
         effectiveArrivalRate = inputs["arrival-rate"] * (1 - probFullSys)
-        meanNumInQueue = probEmptySys * offeredLoad ** inputs["servers"] / (factorial(inputs["servers"]) * (1 - utilization) ** 2 * (1 - utilization ** (inputs["capacity"] - inputs["servers"]) - (inputs["capacity"] - inputs["servers"]) * utilization ** (inputs["capacity"] - inputs["servers"]) * (1 - utilization)))
+        meanNumInQueue = probEmptySys * Math.pow(inputs["servers"] * utilization, inputs["servers"]) * utilization
+        meanNumInQueue /= factorial(inputs["servers"]) * (1 - utilization) ** 2
+        meanNumInQueue *= (1 - Math.pow(utilization, inputs["capacity"] - inputs["servers"] + 1) - (inputs["capacity"] - inputs["servers"] + 1) * Math.pow(utilization, inputs["capacity"] - inputs["servers"]) * (1 - utilization))
         meanTimeInQueue = meanNumInQueue / effectiveArrivalRate
         meanTimeInSys = meanTimeInQueue + (1 / inputs["service-rate"])
         meanNumInSys = meanTimeInSys * effectiveArrivalRate
     }
+
+    // // based on Wikipedia:
+    // // https://en.wikipedia.org/wiki/M/M/c_queue
+    // const lambda = inputs["arrival-rate"];
+    // const mu = inputs["service-rate"];
+    // const c = inputs["servers"];
+    // const K = inputs["capacity"];
+    // const rho = lambda / (c * mu);
+
+    // // Calculate π0 (probability of empty system)
+    // function calculatePi0() {
+    //     let sum = 0;
+    //     for (let k = 0; k <= c; k++) {
+    //         sum += Math.pow(lambda / mu, k) / factorial(k);
+    //     }
+    //     for (let k = c+1; k <= K; k++) {
+    //         sum += (Math.pow(lambda / mu, c) / factorial(c)) * 
+    //                Math.pow(lambda / mu, k - c) / Math.pow(c, k - c);
+    //     }
+        
+    //     return 1 / sum;
+    // }
+
+    // // Helper function to calculate factorial
+    // function factorial(n) {
+    //     if (n === 0 || n === 1) return 1;
+    //     return n * factorial(n - 1);
+    // }
+
+    // probEmptySys = calculatePi0();
+
+    // // Calculate πK (probability of full system)
+    // probFullSys = probEmptySys * Math.pow(lambda / mu, K) / 
+    //                     (Math.pow(c, K - c) * factorial(c));
+
+    // // Calculate effective arrival rate
+    // effectiveArrivalRate = lambda * (1 - probFullSys);
+
+    // // Calculate L (mean number of customers in the system)
+    // meanNumInSys = lambda / mu + 
+    //                      probEmptySys * Math.pow(rho * c, c) * rho / 
+    //                      (factorial(c) * Math.pow(1 - rho, 2));
+
+    // // Calculate W (mean time in the system for a customer)
+    // meanTimeInSys = 1 / mu + 
+    //                       probEmptySys * Math.pow(rho * c, c) / 
+    //                       (lambda * factorial(c) * Math.pow(1 - rho, 2));
+
+    // // Calculate Wq (mean time in the queue for a customer)
+    // meanTimeInQueue = probEmptySys * Math.pow(rho * c, c) / 
+    //                         (lambda * factorial(c) * Math.pow(1 - rho, 2));
+
+    // // Calculate Lq (mean number of customers in the queue)
+    // meanNumInQueue = effectiveArrivalRate * meanTimeInQueue;
 
     return {
         "utilization": effectiveArrivalRate / (inputs["service-rate"] * inputs["servers"]),
