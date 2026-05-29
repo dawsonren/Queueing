@@ -17,7 +17,7 @@ export const QUEUE_TO_INPUT_OUTPUT_KEYS_MAP = {
     "MMsc": [["arrival-rate", "service-rate", "servers", "capacity"], ["utilization", "prob-empty-sys", "prob-full-sys", "mean-num-in-sys", "mean-num-in-queue", "mean-time-in-sys", "mean-time-in-queue", "effective-arrival-rate"]],
     "MMsNN": [["arrival-rate", "service-rate", "servers", "calling-population"], ["utilization", "prob-empty-sys", "mean-num-in-sys", "mean-num-in-queue", "mean-time-in-sys", "mean-time-in-queue", "effective-arrival-rate"]],
     "GG1b": [["mean-interarrival", "standard-deviation-interarrival", "mean-processing", "standard-deviation-processing", "breakdown", "fix", "standard-deviation-fix", "capacity"], ["throughput", "prob-full-sys"]],
-    "GGc": [["mean-interarrival", "standard-deviation-interarrival", "mean-processing", "standard-deviation-processing", "breakdown", "fix", "standard-deviation-fix", "servers"], ["utilization", "mean-num-in-sys", "mean-num-in-queue", "mean-time-in-sys", "mean-time-in-queue", "mean-interdeparture", "standard-deviation-interdeparture"]],
+    "GGs": [["mean-interarrival", "standard-deviation-interarrival", "mean-processing", "standard-deviation-processing", "breakdown", "fix", "standard-deviation-fix", "servers"], ["utilization", "mean-num-in-sys", "mean-num-in-queue", "mean-time-in-sys", "mean-time-in-queue", "mean-interdeparture", "standard-deviation-interdeparture"]],
     "callCenters": [["arrival-rate", "service-rate", "average-waiting-before-abandonment", "servers", "waiting-more-than-t"], ["fraction-delayed-customers", "prob-cust-waits-more-than-t", "mean-time-in-queue", "prob-abandonment", "expected-busy-agents", "occupancy", "expected-busy-lines", "prob-abandonment-given-delayed"]],
     "MG1Priority": [["arrival-rate-type-1", "arrival-rate-type-2", "arrival-rate-type-3", "mean-processing-type-1", "standard-deviation-processing-type-1", "mean-processing-type-2", "standard-deviation-processing-type-2", "mean-processing-type-3", "standard-deviation-processing-type-3"], ["average-waiting-in-queue-type-1", "average-waiting-in-queue-type-2", "average-waiting-in-queue-type-3", "average-waiting-in-system-type-1", "average-waiting-in-system-type-2", "average-waiting-in-system-type-3", "average-number-in-queue-type-1", "average-number-in-queue-type-2", "average-number-in-queue-type-3", "average-number-in-system-type-1", "average-number-in-system-type-2", "average-number-in-system-type-3", "mean-time-in-queue", "mean-time-in-sys", "mean-num-in-queue", "mean-num-in-sys"]]
 }
@@ -397,8 +397,8 @@ export const QUEUE_TO_DESCRIPTION_MAP = {
         "customerPopulation": "Since the rest of the parameters are unspecified, there is a very large population of potential customers who arrive randomly when they need to use the system.",
         "serviceDiscipline": "Customers are served on a first-come, first-served basis."
     },
-    "GGc": {
-        "title": "G/G/c",
+    "GGs": {
+        "title": "G/G/s",
         "arrival": "Customers arrive according to a General distribution with mean $T_{\\lambda}$ and variance $\\sigma_{T, \\lambda}^2$.",
         "service": "Service times follow a General distribution with mean $T_{\\mu}$ and variance $\\sigma_{T,\\mu}^2$. ",
         "servers": "There are $s$ servers.",

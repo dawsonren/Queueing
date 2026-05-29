@@ -259,7 +259,7 @@ function MMsc(inputs) {
 function MMsNN(inputs) {
     const offeredLoad = inputs["arrival-rate"] / inputs["service-rate"]
     const Pi = new Array(inputs["calling-population"]).fill(0)
-    let invP0 = 0
+    let invP0 = 1
     let probEmptySys, meanNumInSys, meanNumInQueue, meanTimeInSys, meanTimeInQueue, effectiveArrivalRate, utilization
     if (inputs["servers"] > 1) {
         for (let i = 1; i <= inputs["servers"] - 1; i++) {
@@ -331,7 +331,7 @@ function GG1b(inputs) {
     }
 }
 
-function GGc(inputs) {
+function GGs(inputs) {
     const customerArrivalRate = 1 / inputs["mean-interarrival"]
     const serverAvailability = inputs["breakdown"] / (inputs["breakdown"] + inputs["fix"])
     const cv2Process = inputs["standard-deviation-processing"] ** 2 / inputs["mean-processing"] ** 2
@@ -474,7 +474,7 @@ export const CALCULATIONS = {
     "MMsc": MMsc,
     "MMsNN": MMsNN,
     "GG1b": GG1b,
-    "GGc": GGc,
+    "GGs": GGs,
     "callCenters": callCenters,
     "MG1Priority": MG1Priority
 }
