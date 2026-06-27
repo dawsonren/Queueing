@@ -108,7 +108,7 @@ function MMsc(inputs) {
         // Otherwise known as the Erlang-B model, where the number of servers is equal to the capacity
         // the entire population can be in the system at the same time
         let invP0 = 1
-        for (let i = 0; i <= inputs["capacity"]; i++) {
+        for (let i = 1; i <= inputs["capacity"]; i++) {
             invP0 += offeredLoad ** i / factorial(i)
         }
         probEmptySys = 1 / invP0
@@ -144,7 +144,7 @@ function MMsc(inputs) {
         // more than one server and the arrival rate is equal to the service rate times the number of servers
         // this is unstable for infinite populations but since there's a limited capacity, it's stable
         let invP0 = 1
-        for (let i = 0; i <= inputs["servers"] - 1; i++) {
+        for (let i = 1; i <= inputs["servers"] - 1; i++) {
             invP0 += offeredLoad ** i / factorial(i)
         }
         invP0 += offeredLoad ** inputs["servers"] * (inputs["capacity"] - inputs["servers"] + 1) / factorial(inputs["servers"])
@@ -308,7 +308,7 @@ function GG1b(inputs) {
     const meanEffectiveProcessingTime = inputs["mean-processing"] / breakdownProportion
     const cv2Outage = inputs["fix"] === 0 ? 0 : inputs["standard-deviation-fix"] ** 2 / inputs["fix"] ** 2
     const cv2EffectiveProcess = cv2Process + (1 + cv2Outage) * breakdownProportion * (1 - breakdownProportion) * (inputs["fix"] / inputs["mean-processing"])
-    const cv2CustomerInterarrival = inputs["standard-deviation-interarrival"] ** 2 / customerArrivalRate ** 2
+    const cv2CustomerInterarrival = inputs["standard-deviation-interarrival"] ** 2 * customerArrivalRate ** 2
 
     const V = (cv2EffectiveProcess + cv2CustomerInterarrival) / 2
     const u1 = customerArrivalRate * meanEffectiveProcessingTime
@@ -441,7 +441,7 @@ function MG1Priority(inputs) {
     const avgNumQueue2 = inputs["arrival-rate-type-2"] * avgWaitingQueue2
     const avgNumSystem2 = inputs["arrival-rate-type-2"] * avgWaitingSystem2
 
-    const avgWaitingQueue3 = inputs["arrival-rate-type-1"] === 0 ? 0 : sumval / (2 * (1 - a2) * (1 - a3))
+    const avgWaitingQueue3 = sumval / (2 * (1 - a2) * (1 - a3))
     const avgWaitingSystem3 = avgWaitingQueue3 + inputs["mean-processing-type-3"]
     const avgNumQueue3 = inputs["arrival-rate-type-3"] * avgWaitingQueue3
     const avgNumSystem3 = inputs["arrival-rate-type-3"] * avgWaitingSystem3
