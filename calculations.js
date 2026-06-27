@@ -417,9 +417,10 @@ function MG1Priority(inputs) {
     const rho2 = inputs["arrival-rate-type-2"] * inputs["mean-processing-type-2"]
     const rho3 = inputs["arrival-rate-type-3"] * inputs["mean-processing-type-3"]
 
-    const prob1 = rho1 / (rho1 + rho2 + rho3)
-    const prob2 = rho2 / (rho1 + rho2 + rho3)
-    const prob3 = rho3 / (rho1 + rho2 + rho3)
+    const totalLambda = inputs["arrival-rate-type-1"] + inputs["arrival-rate-type-2"] + inputs["arrival-rate-type-3"]
+    const prob1 = inputs["arrival-rate-type-1"] / totalLambda
+    const prob2 = inputs["arrival-rate-type-2"] / totalLambda
+    const prob3 = inputs["arrival-rate-type-3"] / totalLambda
 
     const a0 = 0
     const a1 = rho1
